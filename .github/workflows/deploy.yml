@@ -1,4 +1,5 @@
 name: Build & Deploy Laravel
+
 on:
   push:
     branches:
@@ -14,3 +15,13 @@ jobs:
       - name: Build Docker Image
         run: docker build -t laravel-app -f Dockerfile .
 
+      - name: Login ke Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Image ke Docker Hub
+        run: |
+          docker tag laravel-app ${{ secrets.DOCKER_USERNAME }}/laravel-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/laravel-app:latest
