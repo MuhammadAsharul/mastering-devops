@@ -1,0 +1,6 @@
+services:
+  app:
+    image: asharul/laravel-app:latest
+    ports:
+      - "9001:9000"
+    restart: unless-stopped
